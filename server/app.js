@@ -5,6 +5,7 @@ import fileUpload from "express-fileupload";
 import cors from "cors";
 import { createTable } from "./utils/createTables.js";
 import { errorMiddleware } from "./middlewares/errorMiddleware.js";
+import  authRouter from "./router/authRoutes.js"
 
 const app = express();
 
@@ -28,6 +29,9 @@ app.use(
     useTempFiles: true
   })
 );
+
+
+app.use("/api/v1/auth", authRouter)
 
 createTable();
 app.use(errorMiddleware)
