@@ -34,9 +34,28 @@ In Development
 - Created database table models
 - Added table creation utility
 
-
-
 ---
+### Day 2
+- Created `authController.js`
+- Added register functionality
+- Added login functionality
+- Implemented password hashing
+- Created `jwtToken.js`
+- Added JWT authentication flow
+- Tested APIs in Postman
+- Register/Login working successfully ✅
+
+### Day 3
+- Added authentication middleware
+- Implemented protected routes
+- Added logout functionality
+- Added forgot password functionality
+- Created reset password token utility
+- Added email sending utility
+- Created forgot password email template
+- Added role-based authorization middleware
+- APassword reset flow implemented successfully
+
 
 ## 📌 Current Backend Work
 
@@ -46,7 +65,12 @@ In Development
 - Error handling
 - Table models
 - Table creation utility
-
+- Authentication system
+- Protected routes
+- Password reset flow
+- JWT authorization
+- Email utilities
+- Middleware handling
 ---
 
 ## 📦 Features Planned
