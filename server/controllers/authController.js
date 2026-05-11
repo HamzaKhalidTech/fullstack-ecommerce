@@ -1,6 +1,5 @@
 import database from "../database/db.js";
 import bcrypt from "bcryptjs";
-
 import ErrorHandler from "../middlewares/errorMiddleware.js";
 import { catchAsyncErrors } from "../middlewares/catchAsyncError.js";
 import { sendToken } from "../utils/jwtToken.js";
@@ -147,6 +146,53 @@ export const forgotPassword = catchAsyncErrors(async (req, res, next) => {
        reset_password_expire = NULL WHERE email = $1`,
       [email],
     );
-    return next(new ErrorHandler("Email could not be sent",500));
+    return next(new ErrorHandler("Email could not be sent", 500));
   }
+});
+
+export const resetPassword = catchAsyncErrors(async (req, res, next) => {
+  const { token } = req.params;
+  const { password, confirmPassword } = req.body;
+
+  const resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(token)
+    .digest("hex");
+
+  const user = await database.query(
+    `SELECT * FROM users 
+     WHERE reset_password_token = $1 
+     AND reset_password_expire > NOW()`,
+    [resetPasswordToken],
+  );
+
+  if (user.rows.length === 0) {
+    return next(new ErrorHandler("Invalid or expired reset token.", 400));
+  }
+
+  if (!password || !confirmPassword) {
+    return next(new ErrorHandler("All fields are required.", 400));
+  }
+
+  if (password.length < 8 || password.length > 16) {
+    return next(
+      new ErrorHandler("Password must be between 8 and 16 characters.", 400),
+    );
+  }
+
+  if (password !== confirmPassword) {
+    return next(new ErrorHandler("Passwords do not match.", 400));
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const updatedUser = await database.query(
+    `UPDATE users 
+     SET password = $1,
+         reset_password_token = NULL,
+         reset_password_expire = NULL
+     WHERE id = $2`,
+    [hashedPassword, user.rows[0].id],
+  );
+  sendToken(updatedUser.rows[0], 200, "Password reset successfully.");
 });
