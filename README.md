@@ -56,7 +56,38 @@ In Development
 - Added role-based authorization middleware
 - APassword reset flow implemented successfully
 
-
+### Day 4
+- Added reset password functionality
+- Implemented secure password update flow
+- Added reset password controller
+- Verified reset token before password update
+- Added token expiry validation
+- Implemented password confirmation validation
+- Added password update hashing
+- Invalidated reset token after successful reset
+- Improved authentication security flow
+- Tested complete forgot/reset password flow in Postman
+- Password reset system working successfully ✅
+- Added reset password functionality
+- Implemented secure password update flow
+- Added reset password controller
+- Verified reset token before password update
+- Added token expiry validation
+- Implemented password confirmation validation
+- Added password update hashing
+- Invalidated reset token after successful reset
+- Improved authentication security flow
+- Tested complete forgot/reset password flow in Postman
+- Password reset system working successfully 
+### Day 5
+- Implemented updatePassword functionality (secure password change for logged-in user)
+- Added updateProfile API (name, email, avatar update)
+- Integrated Cloudinary for image upload
+- Implemented old avatar deletion before uploading new one
+- Tested profile update in Postman
+- Verified secure password update flow
+- User profile management completed successfully 
+✅
 ## 📌 Current Backend Work
 
 - Server setup
@@ -71,6 +102,7 @@ In Development
 - JWT authorization
 - Email utilities
 - Middleware handling
+- Profile management system
 ---
 
 ## 📦 Features Planned
