@@ -1,11 +1,15 @@
 import database from "../database/db.js";
 import bcrypt from "bcryptjs";
+import crypto from "crypto";
+import {v2 as cloudinary} from 'cloudinary';
 import ErrorHandler from "../middlewares/errorMiddleware.js";
 import { catchAsyncErrors } from "../middlewares/catchAsyncError.js";
 import { sendToken } from "../utils/jwtToken.js";
 import { generateResetPasswordToken } from "../utils/generateResetPasswordToken.js";
 import { sendEmail } from "../utils/sendEmail.js";
 import { generateForgotPasswordEmailTemplate } from "../utils/generateForgotPasswordEmailTemplate.js";
+import { url } from "inspector";
+
 
 export const register = catchAsyncErrors(async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -188,11 +192,113 @@ export const resetPassword = catchAsyncErrors(async (req, res, next) => {
 
   const updatedUser = await database.query(
     `UPDATE users 
-     SET password = $1,
-         reset_password_token = NULL,
-         reset_password_expire = NULL
-     WHERE id = $2`,
+   SET password = $1,
+       reset_password_token = NULL,
+       reset_password_expire = NULL
+   WHERE id = $2
+   RETURNING *`,
     [hashedPassword, user.rows[0].id],
   );
-  sendToken(updatedUser.rows[0], 200, "Password reset successfully.");
+
+  sendToken(updatedUser.rows[0], 200, "Password reset successfully.", res);
+});
+
+export const updatePassword = catchAsyncErrors(async (req, res, next) => {
+  const { currentPassword, newPassword, confirmNewPassword } = req.body;
+
+  if (!currentPassword || !newPassword || !confirmNewPassword) {
+    return next(new ErrorHandler("Please provide all required fields", 400));
+  }
+  const isPasswordMatch = await bcrypt.compare(
+    currentPassword,
+    req.user.password,
+  );
+  if (!isPasswordMatch) {
+    return next(new ErrorHandler("Current password is incorrect.", 401));
+  }
+  if (newPassword !== confirmNewPassword) {
+    return next(new ErrorHandler("New Passwords do not match.", 400));
+  }
+
+  if (
+    newPassword.length < 8 ||
+    newPassword.length > 16 ||
+    confirmNewPassword.length < 8 ||
+    confirmNewPassword > 16
+  ) {
+    return next(
+      new ErrorHandler("Password must be between 8 and 16 characters.", 400),
+    );
+  }
+
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+  await database.query(
+    "UPDATE users SET password = $1 WHERE id = $2", 
+    [hashedPassword, req.user.id]
+  );
+ 
+  res.status(200).json({
+    success: true,
+    message: "Password update successfully.",
+  })
+
+});
+
+
+export const updateProfile = catchAsyncErrors(async (req, res, next) => {
+  const { name, email } = req.body;
+
+  if (!name || !email) {
+    return next(new ErrorHandler("Name and Email are required fields", 400));
+  }
+
+  if (name.trim().length === 0 || email.trim().length === 0) {
+    return next(new ErrorHandler("Name and Email cannot be empty", 400));
+  }
+
+  let avatarData = {};
+
+  if (req.files && req.files.avatar) {
+    const { avatar } = req.files;
+
+    
+    if (req.user?.avatar?.public_id) {
+      await cloudinary.uploader.destroy(req.user.avatar.public_id);
+    }
+
+    const newProfileImage = await cloudinary.uploader.upload(
+      avatar.tempFilePath,
+      {
+        folder: "Ecommerce_Avatars",
+        width: 150,
+        crop: "scale",
+      }
+    );
+
+    avatarData = {
+      public_id: newProfileImage.public_id,
+      url: newProfileImage.secure_url,
+    };
+  }
+
+  let user;
+
+  if (Object.keys(avatarData).length === 0) {
+    user = await database.query(
+      "UPDATE users SET name = $1, email = $2 WHERE id = $3 RETURNING *",
+      [name, email, req.user.id]
+    );
+  } else {
+    user = await database.query(
+      "UPDATE users SET name = $1, email = $2, avatar = $3 WHERE id = $4 RETURNING *",
+      [name, email, avatarData, req.user.id]
+    );
+  }
+
+  res.status(200).json({
+    success: true,
+    message: "Profile updated successfully",
+    user: user.rows[0],
+  });
 });
