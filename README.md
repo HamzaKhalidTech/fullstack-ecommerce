@@ -88,6 +88,10 @@ In Development
 - Verified secure password update flow
 - User profile management completed successfully 
 ✅
+### Day 6
+- Created Product Creation API
+- Added Admin authorization middleware
+- Integrated Cloudinary for product image uploads
 ## 📌 Current Backend Work
 
 - Server setup
