@@ -26,7 +26,7 @@ export const errorMiddleware = (err, req, res, next) => {
     : err.message;
 
   return res.status(err.statusCode).json({
-    success: false,
+    success: false, 
     message: errMessage,
   });
 };

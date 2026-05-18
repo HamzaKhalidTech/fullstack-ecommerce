@@ -92,6 +92,16 @@ In Development
 - Created Product Creation API
 - Added Admin authorization middleware
 - Integrated Cloudinary for product image uploads
+-----
+## Day 7 🚀
+
+- Started `fetchAllProducts` API  
+- Added filtering system (availability, price range)  
+- Implemented pagination (page, limit, offset)  
+- Built dynamic query builder (conditions + values)  
+- SQL parameterized query in progress  
+- Product listing backend under development 📊
+
 ## 📌 Current Backend Work
 
 - Server setup
