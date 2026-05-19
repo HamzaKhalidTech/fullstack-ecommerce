@@ -1,14 +1,14 @@
-# Full Stack E-Commerce
+# 🛒 Full Stack E-Commerce Project
 
-A full-stack e-commerce project that I am building step by step to practice backend, frontend, database, APIs, authentication, and real-world project structure.
+A full-stack e-commerce application built step-by-step to practice **backend, frontend, database design, APIs, authentication, and real-world project architecture**.
 
-> This project is currently in development and will be updated regularly.
+> 🚧 This project is currently in active development and will be updated daily with new features.
 
 ---
 
 ## 🚀 Project Status
 
-In Development
+🟡 In Development
 
 ---
 
@@ -19,118 +19,158 @@ In Development
 - PostgreSQL
 - JavaScript
 - React.js
-- REST API
+- REST APIs
+- JWT Authentication
+- Cloudinary
+- Nodemailer
 
 ---
 
 ## 📅 Daily Progress
 
-### Day 1
+### Day 1 – Project Setup
 - Created backend project structure
-- Added environment configuration
-- Created database connection file
-- Added error handling middleware
-- Added async error handler utility
-- Created database table models
-- Added table creation utility
+- Configured environment variables
+- Established PostgreSQL database connection
+- Built global error handling middleware
+- Created async error handler utility
+- Designed database table models
+- Implemented table creation utility
 
 ---
-### Day 2
-- Created `authController.js`
-- Added register functionality
-- Added login functionality
-- Implemented password hashing
-- Created `jwtToken.js`
-- Added JWT authentication flow
+
+### Day 2 – Authentication System
+- Built `authController.js`
+- Implemented user registration and login
+- Added password hashing using bcrypt
+- Created JWT token utility (`jwtToken.js`)
+- Implemented authentication flow
 - Tested APIs in Postman
-- Register/Login working successfully ✅
+- ✔ Register/Login working successfully
 
-### Day 3
+---
+
+### Day 3 – Protected Routes & Password Recovery
 - Added authentication middleware
-- Implemented protected routes
+- Implemented JWT protected routes
 - Added logout functionality
-- Added forgot password functionality
-- Created reset password token utility
-- Added email sending utility
-- Created forgot password email template
+- Built forgot password system
+- Created reset token utility
+- Integrated email sending service (Nodemailer)
+- Designed HTML email template for password reset
 - Added role-based authorization middleware
-- APassword reset flow implemented successfully
+- ✔ Password reset flow implemented successfully
 
-### Day 4
-- Added reset password functionality
-- Implemented secure password update flow
-- Added reset password controller
-- Verified reset token before password update
-- Added token expiry validation
-- Implemented password confirmation validation
-- Added password update hashing
-- Invalidated reset token after successful reset
-- Improved authentication security flow
-- Tested complete forgot/reset password flow in Postman
-- Password reset system working successfully ✅
-- Added reset password functionality
-- Implemented secure password update flow
-- Added reset password controller
-- Verified reset token before password update
-- Added token expiry validation
-- Implemented password confirmation validation
-- Added password update hashing
-- Invalidated reset token after successful reset
-- Improved authentication security flow
-- Tested complete forgot/reset password flow in Postman
-- Password reset system working successfully 
-### Day 5
-- Implemented updatePassword functionality (secure password change for logged-in user)
-- Added updateProfile API (name, email, avatar update)
-- Integrated Cloudinary for image upload
-- Implemented old avatar deletion before uploading new one
-- Tested profile update in Postman
-- Verified secure password update flow
-- User profile management completed successfully 
-✅
-### Day 6
-- Created Product Creation API
-- Added Admin authorization middleware
+---
+
+### Day 4 – Secure Password Reset System
+- Implemented reset password API
+- Added secure token verification
+- Implemented token expiry validation
+- Added password confirmation validation
+- Improved security for password update flow
+- Invalidated reset token after use
+- ✔ Full password reset system tested and working
+
+---
+
+### Day 5 – Profile Management System
+- Implemented update password functionality
+- Built user profile update API (name, email, avatar)
+- Integrated Cloudinary for image uploads
+- Added old avatar deletion before uploading new one
+- Tested profile update system
+- ✔ User profile system completed successfully
+
+---
+
+### Day 6 – Product Management
+- Created Product creation API
+- Added admin role-based access control
 - Integrated Cloudinary for product image uploads
------
-## Day 7 🚀
-
-- Started `fetchAllProducts` API  
-- Added filtering system (availability, price range)  
-- Implemented pagination (page, limit, offset)  
-- Built dynamic query builder (conditions + values)  
-- SQL parameterized query in progress  
-- Product listing backend under development 📊
-
-## 📌 Current Backend Work
-
-- Server setup
-- App configuration
-- Database connection
-- Error handling
-- Table models
-- Table creation utility
-- Authentication system
-- Protected routes
-- Password reset flow
-- JWT authorization
-- Email utilities
-- Middleware handling
-- Profile management system
----
-
-## 📦 Features Planned
-
-- User authentication
-- Product management
-- Product reviews
-- Cart system
-- Order management
-- Shipping details
-- Payment system
-- Admin dashboard
-- Frontend UI
 
 ---
 
+### Day 7 – Product Listing & Filtering System
+- Built `fetchAllProducts` API
+- Added availability, price, category, rating, and search filters
+- Implemented pagination (limit & offset)
+- Built dynamic SQL query builder
+- Started parameterized query system
+- Product listing backend in progress
 
+---
+
+### Day 8 – Advanced Query Optimization
+- Completed dynamic product filtering system
+- Added category, rating, and keyword search filters
+- Built safe SQL dynamic query builder
+- Optimized product fetch with JOIN (reviews count aggregation)
+- Added "New Products" section (last 7 days)
+- Improved query structure for scalability and maintainability
+- ✔ Backend product system upgraded to production-level quality
+
+---
+
+## 📌 Current Backend Progress (Updated)
+
+- Express.js server setup completed
+- Middleware architecture implemented (CORS, JSON, cookies, file upload)
+- PostgreSQL database connected successfully
+- Global error handling system implemented
+- Modular database schema created (Users, Products, Orders, Payments, Reviews, Shipping, Order Items)
+- Automated table creation system implemented
+- Full authentication system (Register, Login, Logout, Get User)
+- JWT-based authentication and authorization
+- Role-based access control (User / Admin)
+- Password reset system with secure token flow
+- Email service integration (Nodemailer + HTML templates)
+- Secure password update functionality
+- User profile management (name, email, avatar via Cloudinary)
+- Product management system (create, filter, list)
+- Advanced SQL dynamic filtering system
+- Pagination system implemented
+- Product reviews relational system
+- Orders + order items relational structure
+- Shipping information module completed
+- Payment system schema implemented (COD + Online)
+- New products query (last 7 days)
+- Optimized JOIN-based queries for performance
+- Clean MVC-style backend architecture
+
+---
+
+## 🚀 Overall Backend Status
+
+**Current Progress: ~80% Completed**
+
+✔ Authentication system complete  
+✔ Authorization system complete  
+✔ Product system advanced  
+✔ Order & payment system structured  
+✔ Database fully relational  
+✔ Backend architecture scalable  
+
+---
+
+## 📦 Features Planned (Next Phase)
+
+- Shopping cart system (Add / Remove / Update quantity)
+- Checkout flow (Cart → Order → Payment → Shipping)
+- Stock management system
+- Order status tracking (Processing → Shipped → Delivered)
+- Admin dashboard APIs
+- Frontend React UI integration
+- Payment gateway integration (Stripe / COD finalization)
+
+---
+
+## 💡 Project Goal
+
+To build a **real-world scalable e-commerce system** with production-level backend architecture and frontend integration.
+
+---
+
+## 👨‍💻 Author
+
+Built step-by-step as a learning + portfolio project 🚀

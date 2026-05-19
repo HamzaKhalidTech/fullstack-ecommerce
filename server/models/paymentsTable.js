@@ -1,24 +1,77 @@
-import  database  from '../database/db.js';
+// ======================================================
+// DATABASE
+// ======================================================
+
+import database from "../database/db.js";
+
+
+// ======================================================
+// CREATE PAYMENTS TABLE
+// ======================================================
 
 export async function createPaymentsTable() {
-  try 
-  {
-  const query = 
-  `
-  CREATE TABLE IF NOT EXISTS payments (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  order_id UUID NOT NULL UNIQUE,
-  payment_type VARCHAR(20) NOT NULL CHECK (payment_type IN ('Online','Cash On Delivery')),
-  payment_status VARCHAR(100) NOT NULL CHECK (payment_status IN ('Paid', 'Pending', 'Failed')),
-  payment_intent_id VARCHAR(255) UNIQUE,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
-  );
-  `;
-  await database.query(query);
+  try {
+
+    // ======================================================
+    // SQL QUERY
+    // ======================================================
+
+    const query = `
+      CREATE TABLE IF NOT EXISTS payments (
+
+        id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+
+        order_id UUID NOT NULL UNIQUE,
+
+        payment_type VARCHAR(20) NOT NULL
+          CHECK (
+            payment_type IN (
+              'Online',
+              'Cash On Delivery'
+            )
+          ),
+
+        payment_status VARCHAR(100) NOT NULL
+          CHECK (
+            payment_status IN (
+              'Paid',
+              'Pending',
+              'Failed'
+            )
+          ),
+
+        payment_intent_id VARCHAR(255) UNIQUE,
+
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+        -- ====================================================
+        -- FOREIGN KEY
+        -- ====================================================
+
+        FOREIGN KEY (order_id)
+          REFERENCES orders(id)
+          ON DELETE CASCADE
+
+      );
+    `;
+
+    // ======================================================
+    // EXECUTE QUERY
+    // ======================================================
+
+    await database.query(query);
+
   } catch (error) {
-    console.log(":Failed To Create Payment Table:",error);
+
+    // ======================================================
+    // ERROR HANDLING
+    // ======================================================
+
+    console.error(
+      "Failed to create payments table:",
+      error
+    );
+
     process.exit(1);
   }
-  
 }
